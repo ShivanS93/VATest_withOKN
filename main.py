@@ -4,30 +4,40 @@
 
 import os, sys
 import random, math
-from svg import Parser, Rasterizer
 import pygame
+
 from pygame.locals import *
+
+class squareObject:
+    def __init__(self, image, x, y):
+        self.image = image
+        self.x = x
+        self.y = y
 
 def main():
     # Initiaise screen
-    screen_width = 150
-    screen_height = 50
-
     pygame.init()
-    screen = pygame.display.set_mode((screen_width, screen_height))
+
+    infoObj = pygame.display.Info()
+    #screen = pygame.display.set_mode((infoObj.current_w, infoObj.current_h))
+    screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     pygame.display.set_caption('OKN_VA')
+
+    #get screen dimentions
+    width, height = pygame.display.get_surface().get_size()
+
 
     #Fill background
     background = pygame.Surface(screen.get_size())
     background = background.convert()
-    background.fill((0, 250, 250))
+    background.fill((128, 128, 128))
 
-    #Display text
-    font = pygame.font.Font(None, 36)
-    text = font.render("Hello There", 1, (10, 10, 10))
-    textpos = text.get_rect()
-    textpos.centerx = background.get_rect().centerx
-    background.blit(text, textpos)
+    #create square
+    square = pygame.image.load('square.bmp').convert()
+    objects = [squareObject(square, random.random()*width, random.random()*height)
+               for i in range(50)]
+
+
 
     #Blit everthing on the screen
     screen.blit(background, (0, 0))
@@ -37,32 +47,18 @@ def main():
     #while 1:
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT:
-                return
+            if event.type in (QUIT, KEYDOWN):
+                sys.exit()
+ 
+        screen.blit(background, (0,0))
 
-        screen.blit(background, (0, 0))
+        for o in objects:
+            if o.x <= 0:
+                o.x = width
+                o.y = random.random() * height
+            o.x = o.x - 17
+            screen.blit(o.image, (o.x, o.y))
+
         pygame.display.flip()
 
 if __name__ == '__main__': main()
-
-def load_svg(filename, scale=None, size=None, clip_from=None, fit_to=None):
-
-    svg = Parser.parse_file(filename)
-    tx, ty = 0, 0
-    if size is None:
-        w, h = svg.width, svg.height
-    else:
-        w, h = size
-        if clip_from is not None:
-            tx, ty = clip_from
-    if fit_to is None:
-        if scale is None:
-            scale = 1
-    else:
-        fit_w, fit_h = fit_to
-        scale_w = float(fit_w) / svg.width
-        scale_h = float(fit_h) / svg.height
-        scale = min([scale_h, scale_w])
-    rast = rast.rasterize(svg, req_h, scale, tx, ty)
-    image = pygame.image.frombuffer(buff, (req_w, req_h), 'ARGB')
-    return image

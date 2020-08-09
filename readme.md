@@ -2,7 +2,7 @@
 Testing visual acuity by inducing Optokinetic Nystagmus
 ## Required modules
 - pygame
-- svg
+- svgwrite
 - opencv-python
 
 ## To-do
