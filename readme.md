@@ -1,11 +1,12 @@
 # Visual Acuity Tester using Optokinetic Nystagmus
 Testing visual acuity by inducing Optokinetic Nystagmus
 ## Required modules
-- pygame
-- svgwrite
-- opencv-python
+- pygame - generates screen
+- svgwrite - creates .svg file of optotypes
+- opencv-python -
+- cairosvg - converts .svg to .png
 
 ## To-do
-- [ ] Learn Pygame
-- [ ] Sprite with based on cardiff cards
-- [ ] Use OpenCV to detech eye and movement for OKN
+- [X] Learn Pygame
+- [ ] Create Optotype
+- [ ] Use OpenCV to detect eye and movement for OKN
