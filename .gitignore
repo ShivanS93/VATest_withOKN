@@ -288,4 +288,4 @@ cython_debug/
 .idea/modules.xml
 .idea/vcs.xml
 
-VAtest_withOKN
+VAtest_withOKN/
