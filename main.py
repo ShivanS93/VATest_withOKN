@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#/usr/bin/python3
 # Author: Shivan Sivakumaran
 # main.py - creates screen that displays the OKN stimulus
 
@@ -61,6 +61,7 @@ class DrawCircle:
 def main():
 
     pygame.init()
+    SPEED = 7
 
     (W, H) = (2000, 1500) # size of windows by pixel
     screen = pygame.display.set_mode((W, H))
@@ -87,14 +88,14 @@ def main():
                 sys.exit()
 
         for circle in circles:
-            circle.move(rand_dir*11) # speed of OKN stimilus
+            circle.move(rand_dir*SPEED) # speed of OKN stimilus
             circle.drawCircle()
 
         screen.blit(background, (0, 0))
         background.fill((128, 128, 128))
         pygame.display.update()
 
-        if time.time() - timer >= 5: # length of 'VA' shown for
+        if time.time() - timer >= 3: # length of 'VA' shown for
  
             pygame.time.delay(500)
 
@@ -110,3 +111,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
