@@ -6,16 +6,16 @@ import cv2
 import math
 import numpy as np
 
+
 def main():
 
-    faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
-    eyeCascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_alt.xml")
+    eyeCascade = cv2.CascadeClassifier("haarcascade_eye.xml")
 
     # grab the reference to the webcam
-    #try:
-    vs = cv2.VideoCapture(13)
+    # try:
+    vs = cv2.VideoCapture(0)
     print(vs)
-
 
     while True:
         ret, frame = vs.read()
@@ -29,21 +29,20 @@ def main():
         faces = faceCascade.detectMultiScale(frame)
 
         for (x, y, w, h) in faces:
-            roi_gray = gray[y:y+h, x:x+w]
-            roi_color = frame[y:y+h, x:x+w]
+            roi_gray = gray[y : y + h, x : x + w]
+            roi_color = frame[y : y + h, x : x + w]
             eyes = eyeCascade.detectMultiScale(roi_gray)
-            for (ex,ey,ew,eh) in eyes:
-                cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,0,255),2)
+            for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 0, 255), 2)
 
             cv2.imshow("Video", frame)
             key = cv2.waitKey(1) & 0xFF
 
-            if key == ord('q') or key == 27:
+            if key == ord("q") or key == 27:
                 break
-
 
     cv2.destroyAllWindows()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

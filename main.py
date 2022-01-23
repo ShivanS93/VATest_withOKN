@@ -1,4 +1,4 @@
-#/usr/bin/python3
+# /usr/bin/python3
 # Author: Shivan Sivakumaran
 # main.py - creates screen that displays the OKN stimulus
 
@@ -10,8 +10,8 @@ import time
 
 from pygame.locals import *
 
-class DrawCircle:
 
+class DrawCircle:
     def __init__(self, screen_, x_pos, y_pos, radius, diff):
         self.screen_ = screen_
         self.x_pos = x_pos
@@ -19,68 +19,56 @@ class DrawCircle:
         self.radius = radius
         self.diff = diff
 
-        return
-
     def drawCircle(self):
-
         white = (255, 255, 255)
         black = (0, 0, 0)
         grey = (128, 128, 128)
 
-        cir_pos = (self.x_pos+self.radius, self.y_pos+self.radius)
+        cir_pos = (self.x_pos + self.radius, self.y_pos + self.radius)
         r = self.radius
         d = self.diff
 
         pygame.draw.circle(self.screen_, white, cir_pos, r, 0)
-        pygame.draw.circle(self.screen_, black, cir_pos, r-d, 0)
-        pygame.draw.circle(self.screen_, white, cir_pos, r-3*d, 0)
-        pygame.draw.circle(self.screen_, grey, cir_pos, r-4*d, 0)
+        pygame.draw.circle(self.screen_, black, cir_pos, r - d, 0)
+        pygame.draw.circle(self.screen_, white, cir_pos, r - 3 * d, 0)
+        pygame.draw.circle(self.screen_, grey, cir_pos, r - 4 * d, 0)
 
-        return
-    
     def move(self, move_speed):
-
         self.x_pos = self.x_pos + move_speed
-
         if self.x_pos < 0:
             self.x_pos = self.screen_.get_size()[0]
         elif self.x_pos > self.screen_.get_size()[0]:
             self.x_pos = 0
 
-        return
-
     def changeVA(self, acuity):
-
-        # changes thickness of circle lines
-
+        """
+        changes thickness of circle lines
+        """
         self.diff = acuity
-
-        return
 
 
 def main():
-
     pygame.init()
     SPEED = 7
 
-    (W, H) = (2000, 1500) # size of windows by pixel
+    (W, H) = (720, 1280)  # size of windows by pixel
     screen = pygame.display.set_mode((W, H))
-    pygame.display.set_caption('OKN_VA')
+    pygame.display.set_caption("OKN_VA")
 
     background = pygame.Surface(screen.get_size())
     background = background.convert()
     background.fill((128, 128, 128))
 
-    nx, ny = 15, 10 # columns, rows of circles
+    nx, ny = 15, 10  # columns, rows of circles
 
-    a = np.arange(0, W, W/nx)
-    b = np.arange(0, H, H/ny)
+    a = np.arange(0, W, W / nx)
+    b = np.arange(0, H, H / ny)
 
     circles = [DrawCircle(background, x, y, 50, 5) for x in a for y in b]
 
     rand_dir = 1
     timer = time.time()
-    
+
     while True:
 
         for event in pygame.event.get():
@@ -88,15 +76,15 @@ def main():
                 sys.exit()
 
         for circle in circles:
-            circle.move(rand_dir*SPEED) # speed of OKN stimilus
+            circle.move(rand_dir * SPEED)  # speed of OKN stimilus
             circle.drawCircle()
 
         screen.blit(background, (0, 0))
         background.fill((128, 128, 128))
         pygame.display.update()
 
-        if time.time() - timer >= 3: # length of 'VA' shown for
- 
+        if time.time() - timer >= 3:  # length of 'VA' shown for
+
             pygame.time.delay(500)
 
             timer = time.time()
@@ -109,7 +97,6 @@ def main():
 
     return
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
-
-
